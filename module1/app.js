@@ -8,24 +8,44 @@
 	LunchCheckController.$inject = ['$scope'];
 	function LunchCheckController($scope){
 
-		console.log($scope.message);
-		console.log($scope.dishes);
-		console.log(this);
-
 		$scope.changeMessage = function (dishesString){
 			console.log(dishesString);
 			if(dishesString==undefined || dishesString===""){
-				$scope.message="Please enter data first";
+				var dishesArray = [];
 			} else {
-				var dishesArray = dishesString.split(',');
-				console.log(dishesArray.length);
-				if(dishesArray.length <=3){
-					$scope.message="Enjoy!";
-				} else {
-					$scope.message="Too much!";
-				}
+				var dishesArray = cleanArray(dishesString.split(','));
 			}
+				
+			if(dishesArray.length ==0 ){
+				showMessage("Please enter data first", "red", "red");
+			} 
+			if(dishesArray.length >=1 && dishesArray.length <=3){
+				showMessage("Enjoy!", "green", "green");
+			} 
+			if(dishesArray.length >3) {
+				showMessage("Too Much!", "green", "green");
+			}
+			
+		}
+
+		function showMessage(message, textColor, borderColor){
+			$scope.message=message;
+			$scope.messageColor=textColor;
+			$scope.borderColor=borderColor;
 		}
 	}
 
 })();
+
+function cleanArray(stringArray){
+	var stringArrayNonEmpty = [];
+	if(stringArray != undefined){
+		for (var i=0; i<stringArray.length; i++){
+			if(stringArray[i]){
+			stringArrayNonEmpty.push(stringArray[i]);
+			}
+		}
+	}
+	console.log(stringArrayNonEmpty.length);
+	return stringArrayNonEmpty;
+}

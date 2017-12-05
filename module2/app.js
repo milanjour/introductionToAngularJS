@@ -9,27 +9,25 @@
 
 	ToBuyController.inject = ['ShoppingListCheckOffService'];
 	function ToBuyController (ShoppingListCheckOffService) {
-		var list1 = this;
+		var controller = this;
 
-		list1.toBuyList = ShoppingListCheckOffService.toBuy();
-
-		list1.remove = function (itemIndex) {
+		controller.remove = function (itemIndex) {
 			ShoppingListCheckOffService.remove(itemIndex);
 		};
 
-		list1.message = function () {
-			return (list1.toBuyList.length == 0);
+		controller.isEmpty = function () {
+			return (controller.toBuyList.length == 0);
 		};
 	}
 
 	AlreadyBoughtController.inject = ['ShoppingListCheckOffService'];
 	function AlreadyBoughtController (ShoppingListCheckOffService) {
-		var list2 = this;
+		var controller = this;
 
-		list2.boughtList = ShoppingListCheckOffService.bought;
+		controller.boughtList = ShoppingListCheckOffService.bought;
 
-		list2.message = function () {
-			return (list2.boughtList.length == 0);
+		controller.isEmpty = function () {
+			return (controller.boughtList.length == 0);
 		};
 		
 		
@@ -38,10 +36,9 @@
 	function ShoppingListCheckOffService () {
 		var service = this;
 
-		service.toBuyList = [];
 		service.bought = [];
 
-		service.initialList = [
+		service.toBuyList = [
 		{
 			name: 'A',
 			quantity: '5'},
@@ -58,11 +55,6 @@
 			name: 'E',
 			quantity: '1'}
 		];
-
-		service.toBuy = function () {
-			service.toBuyList = service.initialList;
-			return service.toBuyList;
-		};
 
 		service.remove = function (itemIndex) {
 			var x = service.toBuyList.splice(itemIndex, 1)[0];

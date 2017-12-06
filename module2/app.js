@@ -11,6 +11,8 @@
 	function ToBuyController (ShoppingListCheckOffService) {
 		var controller = this;
 
+		controller.toBuyList = ShoppingListCheckOffService.initializeToBuyList();
+
 		controller.remove = function (itemIndex) {
 			ShoppingListCheckOffService.remove(itemIndex);
 		};
@@ -36,9 +38,10 @@
 	function ShoppingListCheckOffService () {
 		var service = this;
 
+		service.toBuyList = [];
 		service.bought = [];
 
-		service.toBuyList = [
+		service.toBuyListInitial = [
 		{
 			name: 'A',
 			quantity: '5'},
@@ -55,6 +58,11 @@
 			name: 'E',
 			quantity: '1'}
 		];
+
+		service.initializeToBuyList = function () {		
+ 			service.toBuyList = service.toBuyListInitial;		
+ 			return service.toBuyList;		
+		};
 
 		service.remove = function (itemIndex) {
 			var x = service.toBuyList.splice(itemIndex, 1)[0];
